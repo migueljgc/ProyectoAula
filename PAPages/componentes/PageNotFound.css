@@ -1,0 +1,42 @@
+.error-page-container {
+  background-color: transparent;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+}
+
+.error-message {
+  background-color: rgb(5, 184, 255);
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  z-index: 1;
+}
+
+.error-number {
+  font-size: 6rem;
+  margin-bottom: 0;
+}
+
+.error-text {
+  font-size: 1.2rem;
+  margin-top: 10px;
+}
+
+
+.home-button {
+  display: inline-block;
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  margin-top: 20px;
+  z-index: 1;
+}
+
+

@@ -1,0 +1,21 @@
+.Ap {  display: grid;
+    grid-template-columns: 2.2fr 0.1fr 1.6fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+      "tabla . formulario"
+      "tabla . formulario"
+      "tabla . formulario";
+  }
+  
+  .tabla { grid-area: tabla; }
+  
+  .formulario { grid-area: formulario; }
+
+.Form{
+  border: 2px solid rgb(0, 0, 0);
+  text-align: center;
+
+}
+  

@@ -1,0 +1,85 @@
+.login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 110%;
+    min-height: 100vh;
+
+}
+
+.formLogin {
+    text-align: center;
+    font-size: small;
+    background: transparent;
+}
+
+.usa {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 2fr 0.2fr 1.3fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+        "usu usu usu"
+
+}
+
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 0.6fr 1.1fr 1.3fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+}
+
+.loginForm {
+    background: transparent;
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 5%;
+    width: 110%;
+    height: 100%;
+
+
+}
+
+.remember-forgod {
+    display: flex;
+    justify-content: space-around;
+
+}
+
+.input-box input {
+    margin: 0 0;
+    outline: none;
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 40px;
+    background: transparent;
+
+}
+
+.remember-forgod label {
+    color: #1900ff;
+}
+
+a,
+button {
+    color: #1900ff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+label,
+p {
+    font-weight: 1000;
+}
+
+button {
+    background: white;
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 40px;
+    width: 110px;
+    height: 30px;
+    cursor: pointer;
+
+}
