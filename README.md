@@ -1,22 +1,13 @@
 # Proyecto De PQRS
 
-### Integrantes:
-- Adriana Milena Barrios Sierra
-- Arturo Marrugo
-- Miguel Gaviria
-- Esteban Garcia
-- Jhojam Caraballo
-
----
 
 ## Iniciar el Back-End
 
 Para iniciar el Back-End deben tener:
 
-1. **Configurada la base de datos en SQL llamada `PQRS`**
-2. **Crear un usuario llamado `administrador` con contraseña `1234`**
-3. **Abrir los puertos de SQL Server `1433` para que se conecte el Back-End con SQL Server**
-4. **Tener más de `2GB` de RAM disponibles para un buen funcionamiento**
+1. **Configurada la base de datos en MySQL llamada `PQRS`**
+2. **Crear un usuario llamado `root` con contraseña `Osoted12.`, ya lo adaptan a el su su servidor en el aplicattion.yml**
+3. **Tener más de `2GB` de RAM disponibles para un buen funcionamiento**
 
 ---
 
