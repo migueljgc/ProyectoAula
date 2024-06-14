@@ -59,7 +59,7 @@ export const Login = () => {
             }
         } catch (error) {
             console.error('Error al obtener los datos de la base de datos:', error);
-            alert('Error al obtener los datos de la base de datos');
+            alert('Credenciales incorrectas');
         }
 
         if (rememberMe) {

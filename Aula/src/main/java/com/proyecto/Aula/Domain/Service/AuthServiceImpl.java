@@ -3,13 +3,13 @@ package com.proyecto.Aula.Domain.Service;
 import com.proyecto.Aula.Controller.models.AuthResponse;
 import com.proyecto.Aula.Controller.models.AuthenticationRequest;
 import com.proyecto.Aula.Controller.models.RegisterRequest;
-import com.proyecto.Aula.Persistence.Entity.Dependence;
 import com.proyecto.Aula.Persistence.Entity.Role;
 import com.proyecto.Aula.Persistence.Entity.User;
 import com.proyecto.Aula.Persistence.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -107,5 +107,25 @@ public class AuthServiceImpl implements AuthService {
         return AuthResponse.builder()
                 .token(jwtToken).build();
     }
+
+    @Override
+    public User getCurrentUser(Authentication authentication) {
+        return (User) authentication.getPrincipal();
+    }
+
+    @Override
+    public User updateUser(User updatedUser, Authentication authentication) {
+        User currentUser = (User) authentication.getPrincipal();
+        currentUser.setEmail(updatedUser.getEmail());
+        currentUser.setName(updatedUser.getName());
+        currentUser.setLastName(updatedUser.getLastName());
+        currentUser.setIdentificationType(updatedUser.getIdentificationType());
+        currentUser.setIdentificationNumber(updatedUser.getIdentificationNumber());
+        currentUser.setPersonType(updatedUser.getPersonType());
+        currentUser.setDependence(updatedUser.getDependence());
+        userRepository.save(currentUser);
+        return currentUser;
+    }
+
 }
 

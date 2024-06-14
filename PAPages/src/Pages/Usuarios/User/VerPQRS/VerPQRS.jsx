@@ -30,6 +30,10 @@ useEffect( () => {
     }, []);
     const columns=[
         {
+            name: 'Dependencia',
+            selector: row => row.dependence.nameDependence
+        },
+        {
             name: 'Categoria',
             selector: row => row.category.nameCategory
         },

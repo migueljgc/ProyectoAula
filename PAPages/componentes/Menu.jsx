@@ -15,6 +15,7 @@ export const MenuAdmin = () => {
                         <input type="checkbox" id="btn-nav" />
                         <nav>
                             <ul className="men">
+                                <li><a href="/HomePagesAdmin"> Home </a></li>
                                 <li><a href="/VerUsuarios"> Ver Usuario </a></li>
                                 <li><a href="/CrearUsuario">Crear Usuario </a></li>
                                 <li><a href="/CrearSecre">Crear Secretario de Dependencia </a></li>
@@ -61,6 +62,7 @@ export const MenuSecre = () => {
                         <input type="checkbox" id="btn-nav" />
                         <nav>
                             <ul className="men">
+                                <li><a href="/HomePagesSecre"> Home </a></li>
                                 <li><a href="/GestionPQRS"> Gestion PQRS </a></li>
 
                             </ul>
@@ -100,7 +102,9 @@ export const MenuUser = () => {
                         <input type="checkbox" id="btn-nav" />
                         <nav>
                             <ul className="men">
-                            <li><a href="/CrearPQRS"> Crear PQRS </a></li>
+                                <li><a href="/HomePagesUser"> Home </a></li>
+
+                                <li><a href="/CrearPQRS"> Crear PQRS </a></li>
                                 <li><a href="/VerPQRS"> Ver PQRS </a></li>
 
                             </ul>

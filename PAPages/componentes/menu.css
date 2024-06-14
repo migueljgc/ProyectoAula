@@ -123,4 +123,6 @@ nav {
 
 .menus{
   z-index: 2;
+  border-bottom: 2px solid #000000;
+
 }

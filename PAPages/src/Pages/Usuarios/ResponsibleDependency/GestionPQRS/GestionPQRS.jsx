@@ -11,15 +11,33 @@ export const GestionPQRS = () => {
     const [datas, setDatas] = useState([]);
     const [selectedRow, setSelectedRow] = useState(null); // Cambiado para que sea null en lugar de un array
     const navigate = useNavigate();
+    const [user, setUser] = useState({
+        dependence: ''
+    });
 
     const fetchData = async () => {
         try {
             const response = await axios.get('http://localhost:8080/api/request/get');
             setData(response.data);
+            const token = localStorage.getItem('token');
+            const response1 = await axios.get('http://localhost:8080/api/auth/editar', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            const usuario = response1.data.dependence.idDependence
+            console.log(usuario)
+            if (usuario) {
+                const filteredData = response.data.filter(item => item.dependence && item.dependence.idDependence === usuario); // Filtrar los datos por el usuario
+                setData(filteredData);
+            } else {
+                setData([]);
+            }
         } catch (error) {
             console.error('Error en la data: ', error);
         }
     };
+
 
 
     useEffect(() => {
@@ -50,6 +68,10 @@ export const GestionPQRS = () => {
 
     // Definir las columnas de la tabla
     const columns = [
+        {
+            name: 'Dependencia',
+            selector: row => row.dependence.nameDependence
+        },
         {
             name: 'Categoria',
             selector: row => row.category.nameCategory

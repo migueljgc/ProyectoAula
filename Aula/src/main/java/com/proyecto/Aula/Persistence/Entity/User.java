@@ -1,5 +1,6 @@
 package com.proyecto.Aula.Persistence.Entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -63,7 +64,8 @@ public class User  implements UserDetails {
     @Column(name = "Estado_Usuario")
     private String stateUser;
 
-
+    @JsonDeserialize(contentAs = SimpleGrantedAuthority.class)
+    private List<SimpleGrantedAuthority> authorities;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
