@@ -22,6 +22,7 @@ export const TiposSolicitud = () => {
 
     };
     useEffect(() => {
+        document.title = "Tipos de Solicitud"
         fetchData();
     }, []);
 

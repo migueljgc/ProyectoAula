@@ -24,6 +24,7 @@ export const CrearUsuario = () => {
     const [rolesTypes, setRolesTypes] = useState([]);
 
     useEffect(() => {
+        document.title = "Crear Usuarios"
         const fetchIdentificationTypes = async () => {
             try {
                 const response = await axios.get('http://localhost:8080/api/identification_type/get');

@@ -12,6 +12,7 @@ export const EdicionUsuario = () => {
     const [personTypes, setPersonTypes] = useState([]);
 
     useEffect(() => {
+        document.title = "Edicion Usuario"
         fetchData();
         fetchPersonTypes();
     }, []);

@@ -23,6 +23,7 @@ export const TiposIdentificacion = () => {
 
     };
     useEffect(() => {
+        document.title = "Tipos de Identificacion"
         fetchData();
     }, []);
 

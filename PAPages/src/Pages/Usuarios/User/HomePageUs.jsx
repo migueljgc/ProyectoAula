@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BackGraund } from '../../../../componentes/BackGraund';
 import { MenuUser } from '../../../../componentes/Menu';
 
 export const HomePageUs = () => {
     const user = localStorage.getItem('username');
     console.log(user)
+    useEffect(()=> {
+        document.title = "Home"
+    })
     return (
         <div className="crearUsuario">
             <BackGraund />

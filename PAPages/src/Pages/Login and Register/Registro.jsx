@@ -20,6 +20,7 @@ export const Registro = () => {
     const [personTypes, setPersonTypes] = useState([]);
 
     useEffect(() => {
+        document.title = "Registro"
         const fetchIdentificationTypes = async () => {
             try {
                 const response = await axios.get('http://localhost:8080/api/identification_type/get');

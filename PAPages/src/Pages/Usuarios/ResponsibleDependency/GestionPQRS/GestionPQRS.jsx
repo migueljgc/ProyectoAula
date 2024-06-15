@@ -41,6 +41,7 @@ export const GestionPQRS = () => {
 
 
     useEffect(() => {
+        document.title = "Gestion PQRS"
         fetchData();
     }, []);
 
@@ -65,6 +66,23 @@ export const GestionPQRS = () => {
             alert('Por favor seleccione una fila');
         }
     };
+
+
+    const conditionalRowStyles = [
+        {
+            when: row => row === selectedRow,
+            style: {
+                backgroundColor: '#b0e0e6',
+                color: 'black',
+                '&:hover': {
+                    cursor: 'pointer'
+                }
+            }
+        }
+    ];
+
+
+
 
     // Definir las columnas de la tabla
     const columns = [
@@ -116,6 +134,7 @@ export const GestionPQRS = () => {
                         onRowClicked={handleRow}
                         fixedHeader
                         highlightOnHover
+                        conditionalRowStyles={conditionalRowStyles}
                     /> <br />
                     <button onClick={handleResponderClick} disabled={!selectedRow}>Responder</button>
                     <br />

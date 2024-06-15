@@ -23,6 +23,7 @@ export const TiposDependencia = () => {
 
     };
     useEffect(() => {
+        document.title = "Tipos de Dependencia"
         fetchData();
     }, []);
     const handleChange = (e) => {

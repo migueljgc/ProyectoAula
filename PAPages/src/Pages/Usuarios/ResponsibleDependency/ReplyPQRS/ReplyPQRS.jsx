@@ -34,7 +34,9 @@ export const ReplyPQRS = () => {
             [e.target.name]: e.target.value,
         });
     };
-    useEffect(() => {console.log(form.idRequest)
+    useEffect(() => {
+        console.log(form.idRequest)
+        document.title = "Responder PQRS"
         
     }, []);
     const habdleSubmit = async (e) => {

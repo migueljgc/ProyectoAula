@@ -26,6 +26,7 @@ export const VerPQRS = () => {
 
     };
 useEffect( () => {
+    document.title = "Ver PQRS"
         fetchData();
     }, []);
     const columns=[

@@ -18,6 +18,7 @@ export  const VerUsuarios = () => {
 
     };
     useEffect( () => {
+        document.title = "Ver Usuarios"
         fetchData();
     }, []);
     const columns=[

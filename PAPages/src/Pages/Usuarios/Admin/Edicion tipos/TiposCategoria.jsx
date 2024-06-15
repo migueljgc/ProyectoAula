@@ -40,6 +40,7 @@ export const TiposCategoria = () => {
         });
     };
     useEffect(() => {
+        document.title = "Tipos de Categoria"
         fetchData();
         fetchDependence();
     }, []);

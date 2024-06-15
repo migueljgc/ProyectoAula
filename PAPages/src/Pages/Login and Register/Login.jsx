@@ -13,6 +13,7 @@ export const Login = () => {
     const [rememberMe, setRememberMe] = useState(false);
 
     useEffect(() => {
+        document.title = "Login"
         const storedUsername = localStorage.getItem('username');
         const storedPassword = localStorage.getItem('password');
 

@@ -24,6 +24,7 @@ export const CrearSecre = () => {
     const [dependenceTypes, setDependence] = useState([]);
 
     useEffect(() => {
+        document.title = "Crear Secretario"
         const fetchIdentificationTypes = async () => {
             try {
                 const response = await axios.get('http://localhost:8080/api/identification_type/get');
@@ -56,6 +57,7 @@ export const CrearSecre = () => {
         fetchIdentificationTypes();
         fetchPersonTypes();
         fetchDependence();
+
     }, []);
 
     const handleChange = (e) => {

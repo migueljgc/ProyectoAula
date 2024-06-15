@@ -67,6 +67,7 @@ export const CrearPQRS = () => {
     }, []);
 
     useEffect(() => {
+        document.title = "Crear PQRS"
         const username = localStorage.getItem('username');
         if (username) {
             setFormData(prevFormData => ({ ...prevFormData, user: username }));
