@@ -4,6 +4,7 @@ package com.proyecto.Aula.Controller;
 import com.proyecto.Aula.Controller.models.AuthResponse;
 import com.proyecto.Aula.Controller.models.AuthenticationRequest;
 import com.proyecto.Aula.Controller.models.RegisterRequest;
+import com.proyecto.Aula.Domain.Dto.UserDTO;
 import com.proyecto.Aula.Domain.Service.AuthService;
 import com.proyecto.Aula.Persistence.Entity.User;
 import com.proyecto.Aula.Persistence.Repository.UserRepository;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -47,9 +49,6 @@ public class AuthController {
         return ResponseEntity.ok(authService.getCurrentUser(authentication));
     }
 
-    @PutMapping("/editar")
-    public ResponseEntity<User> updateUser(@RequestBody User updatedUser, Authentication authentication) {
-        return ResponseEntity.ok(authService.updateUser(updatedUser, authentication));
-    }
+
 
 }

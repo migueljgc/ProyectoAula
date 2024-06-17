@@ -44,6 +44,7 @@ public class UserService {
             existingUser.setEmail(userDTO.getEmail());
             existingUser.setIdentificationNumber(userDTO.getIdentificationNumber());
             existingUser.setPersonType(userDTO.getPersonType());
+            existingUser.setDependence(userDTO.getDependence());
             // Actualizar otros campos si es necesario
             userRepository.save(existingUser);
             return userDTO;
@@ -56,6 +57,27 @@ public class UserService {
 
     public boolean existsById(Long id) {
         return userRepository.existsById(id);
+    }
+
+    public UserDTO update1(UserDTO userDTO) {
+        Optional<User> existingUserOptional = userRepository.findById(userDTO.getId());
+        if (existingUserOptional.isPresent()) {
+            User existingUser = existingUserOptional.get();
+            existingUser.setName(userDTO.getName());
+            existingUser.setLastName(userDTO.getLastName());
+            existingUser.setEmail(userDTO.getEmail());
+            existingUser.setIdentificationNumber(userDTO.getIdentificationNumber());
+            existingUser.setPersonType(userDTO.getPersonType());
+            existingUser.setUser(userDTO.getUser());
+            existingUser.setPassword(userDTO.getPassword());
+            existingUser.setIdentificationType(userDTO.getIdentificationType());
+            existingUser.setDependence(userDTO.getDependence());
+            userRepository.save(existingUser);
+            return userDTO;
+        } else {
+            userRepository.save(UserMapper.toEntity(userDTO));
+            return userDTO;
+        }
     }
 
 }

@@ -113,19 +113,7 @@ public class AuthServiceImpl implements AuthService {
         return (User) authentication.getPrincipal();
     }
 
-    @Override
-    public User updateUser(User updatedUser, Authentication authentication) {
-        User currentUser = (User) authentication.getPrincipal();
-        currentUser.setEmail(updatedUser.getEmail());
-        currentUser.setName(updatedUser.getName());
-        currentUser.setLastName(updatedUser.getLastName());
-        currentUser.setIdentificationType(updatedUser.getIdentificationType());
-        currentUser.setIdentificationNumber(updatedUser.getIdentificationNumber());
-        currentUser.setPersonType(updatedUser.getPersonType());
-        currentUser.setDependence(updatedUser.getDependence());
-        userRepository.save(currentUser);
-        return currentUser;
-    }
+
 
 }
 

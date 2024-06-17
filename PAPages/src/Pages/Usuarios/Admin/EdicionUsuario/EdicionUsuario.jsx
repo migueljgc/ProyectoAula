@@ -10,11 +10,13 @@ export const EdicionUsuario = () => {
     const [data, setData] = useState([]);
     const [selectedItem, setSelectedItem] = useState(null);
     const [personTypes, setPersonTypes] = useState([]);
+    const [dependence, setDependence] = useState([]);
 
     useEffect(() => {
         document.title = "Edicion Usuario"
         fetchData();
         fetchPersonTypes();
+        fetchDependence();
     }, []);
 
     const fetchData = async () => {
@@ -36,34 +38,38 @@ export const EdicionUsuario = () => {
         }
     };
     
+    const fetchDependence = async () => {
+        try {
+            const response = await axios.get('http://localhost:8080/api/dependence/get');
+            setDependence(response.data);
+        } catch (error) {
+            console.error('Error al obtener dependencias: ', error);
+        }
+    };
+
     const handleRowClicked = (row) => {
         setSelectedItem(row);
     };
 
     const handleFormChange = (event) => {
         const { name, value } = event.target;
-        if (name === 'personType') {
-            const selectedType = personTypes.find(type => type.namePersonType === value);
-            setSelectedItem((prevState) => ({
-                ...prevState,
-                personType: selectedType,
-            }));
-        } else {
-            setSelectedItem((prevState) => ({
-                ...prevState,
-                [name]: value,
-            }));
-        }
+
+        setSelectedItem((prevState) => ({
+            ...prevState,
+            [name]: name === 'personType' ? personTypes.find(type => type.namePersonType === value) : 
+                                           dependence.find(dep => dep.nameDependence === value),
+        }));
     };
+    
+    
 
     const handleUpdate = async () => {
         if (selectedItem) {
             try {
                 const updatedItem = {
                     ...selectedItem,
-                    personType: personTypes.find(
-                        (type) => type.namePersonType === selectedItem.personType.namePersonType
-                    ),
+                    personType: personTypes.find(type => type.namePersonType === selectedItem.personType.namePersonType),
+                    dependence: dependence.find(type => type.nameDependence === selectedItem.dependence.nameDependence),
                 };
                 const token = localStorage.getItem('token');
                 
@@ -127,6 +133,10 @@ export const EdicionUsuario = () => {
         {
             name: 'Tipo de Persona',
             selector: row => row.personType ? row.personType.namePersonType : 'No especificado',
+        },
+        {
+            name: 'Dependencia',
+            selector: row => row.dependence.nameDependence
         },
     ];
 
@@ -198,6 +208,21 @@ export const EdicionUsuario = () => {
                                         {personTypes.map((type) => (
                                             <option key={type.idPersonType} value={type.namePersonType}>
                                                 {type.namePersonType}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div> <br />
+                                <div className="select-box1">
+                                    <label htmlFor="dependence">Dependencias:</label><br />
+                                    <select
+                                        id="dependence"
+                                        name="dependence"
+                                        value={selectedItem.dependence ? selectedItem.dependence.nameDependence : ''}
+                                        onChange={handleFormChange}
+                                    >
+                                        {dependence.map((type) => (
+                                            <option key={type.idDependence} value={type.nameDependence}>
+                                                {type.nameDependence}
                                             </option>
                                         ))}
                                     </select>

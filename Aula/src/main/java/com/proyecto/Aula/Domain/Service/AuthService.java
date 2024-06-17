@@ -12,6 +12,5 @@ public interface AuthService {
     AuthResponse registerAd (RegisterRequest Request );
     AuthResponse registerSe (RegisterRequest Request );
     User getCurrentUser(Authentication authentication);
-    User updateUser(User updatedUser, Authentication authentication);
 
 }

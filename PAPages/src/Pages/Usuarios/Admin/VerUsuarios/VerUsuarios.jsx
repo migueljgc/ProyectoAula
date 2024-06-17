@@ -35,8 +35,12 @@ export  const VerUsuarios = () => {
             selector: row => row.stateUser
         },
         {
-            name: 'Dependence',
+            name: 'Dependencia',
             selector: row => row.dependence.nameDependence
+        },
+        {
+            name: 'Tipos de Persona',
+            selector: row => row.personType.namePersonType
         },
     ]
 return(
