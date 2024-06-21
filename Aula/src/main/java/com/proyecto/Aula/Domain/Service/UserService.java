@@ -11,7 +11,11 @@ import com.proyecto.Aula.Persistence.Entity.User;
 import com.proyecto.Aula.Persistence.Repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +25,23 @@ import java.util.stream.Collectors;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    public void resetPassword(String email, String newPassword) {
+        User user = userRepository.findByEmail(email);
+        if (user != null) {
+            user.setPassword(passwordEncoder.encode(newPassword)); // Actualiza la contraseña del usuario
+            userRepository.save(user); // Guarda el usuario actualizado en la base de datos
+        } else {
+            throw new IllegalArgumentException("Email no encontrado: " + email);
+        }
+    }
 
     public UserDTO save(UserDTO userDTO) {
         userRepository.save(UserMapper.toEntity(userDTO));
@@ -77,6 +98,28 @@ public class UserService {
         } else {
             userRepository.save(UserMapper.toEntity(userDTO));
             return userDTO;
+        }
+    }
+
+    public UserDTO upda(UserDTO userDTO) {
+        Optional<User> existingUserOptional = userRepository.findById(userDTO.getId());
+        if (existingUserOptional.isPresent()) {
+            User existingUser = existingUserOptional.get();
+            existingUser.setStateUser(userDTO.getStateUser());
+            userRepository.save(existingUser);
+            return userDTO;
+        } else {
+            userRepository.save(UserMapper.toEntity(userDTO));
+            return userDTO;
+        }
+    }
+
+
+    public void verifyUser(String username) {
+        User user = userRepository.findByUser(username);
+        if (user != null){
+            user.setStateUser("ACTIVO");
+            userRepository.save(user);
         }
     }
 

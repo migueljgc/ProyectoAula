@@ -15,11 +15,9 @@ export const Login = () => {
     useEffect(() => {
         document.title = "Login"
         const storedUsername = localStorage.getItem('username');
-        const storedPassword = localStorage.getItem('password');
 
-        if (storedUsername && storedPassword) {
+        if (storedUsername) {
             setUser(storedUsername);
-            setPassword(storedPassword);
             setRememberMe(true);
         }
     }, []);
@@ -44,7 +42,15 @@ export const Login = () => {
                 const { token, authorities } = response.data;
                 localStorage.setItem('token', token);
                 localStorage.setItem('user', JSON.stringify({ user, role: authorities[0] })); // Assuming single role
-
+                const response1 = await axios.get('http://localhost:8080/api/auth/editar', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                localStorage.removeItem('username')
+                const users=(response1.data.user)
+                console.log(users)
+                localStorage.setItem('users', users);
                 if (authorities.includes('ADMIN')) {
                     window.location.href = '/HomePagesAdmin';
                 } else if (authorities.includes('USER')) {
@@ -64,8 +70,8 @@ export const Login = () => {
         }
 
         if (rememberMe) {
+            localStorage.removeItem('username')
             localStorage.setItem('username', user);
-            localStorage.setItem('password', password);
         }
     }
 

@@ -31,6 +31,14 @@ public class JwtService {
                 .signWith(getSingInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
+    public String genereteToken1(String email){
+        return Jwts.builder()
+                .setSubject(email)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() * 1000 * 60 *60 *24))
+                .signWith(getSingInKey(), SignatureAlgorithm.HS256)
+                .compact();
+    }
 
 
     public <T> T getClaim(String token, Function<Claims, T> claimsResolver){
@@ -52,9 +60,26 @@ public class JwtService {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parserBuilder().setSigningKey(getSingInKey()).build().parseClaimsJws(token);
+            return true;
+        }
+        catch (Exception e){
+            return false;
+        }
+    }
+
     public boolean validateToken(String token, UserDetails userDetails) {
         final String username= getUserName(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    }
+    public boolean validateTokenForPasswordReset(String token) {
+        try {
+            return !isTokenExpired(token);
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     private boolean isTokenExpired(String token) {

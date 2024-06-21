@@ -13,4 +13,5 @@ public interface AuthService {
     AuthResponse registerSe (RegisterRequest Request );
     User getCurrentUser(Authentication authentication);
 
+    ;
 }

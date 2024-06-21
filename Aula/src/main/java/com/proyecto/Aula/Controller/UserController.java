@@ -3,6 +3,8 @@ package com.proyecto.Aula.Controller;
 import com.proyecto.Aula.Domain.Dto.RequestDTO;
 import com.proyecto.Aula.Domain.Dto.UserDTO;
 import com.proyecto.Aula.Domain.Service.UserService;
+import com.proyecto.Aula.Persistence.Entity.User;
+import com.proyecto.Aula.Persistence.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,7 +20,6 @@ import java.util.Optional;
 public class UserController {
     @Autowired
     private UserService userService;
-
 
     @GetMapping("/get")
     public List<UserDTO> get() {
@@ -58,6 +59,8 @@ public class UserController {
         UserDTO updatedUser = userService.update1(userDto);
         return ResponseEntity.ok(updatedUser);
     }
+
+
 
 
 }

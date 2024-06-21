@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 
@@ -26,6 +27,7 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final EmailServiceImpl emailService;
 
     @Override
     public AuthResponse register(RegisterRequest request) {
@@ -34,7 +36,7 @@ public class AuthServiceImpl implements AuthService {
                 .name(request.getName())
                 .lastName(request.getLastName())
                 .email(request.getEmail())
-                .stateUser("ACTIVO")
+                .stateUser("INACTIVO")
                 .identificationType(request.getIdentificationType())
                 .identificationNumber(request.getIdentificationNumber())
                 .personType(request.getPersonType())
@@ -44,6 +46,36 @@ public class AuthServiceImpl implements AuthService {
                 .build();
         userRepository.save(user);
         var jwtToken = jwtService.genereteToken((UserDetails) user);
+
+        // Enviar correo electrónico de activación
+        String activationLink1 = "http://localhost:5173/activate/"+jwtToken;
+        String mensajeHtml = String.format(
+                "<h1>Hola %s %s</h1>" +
+                        "<p>Gracias por iniciar el proceso de verificación de identidad en nuestra plataforma. Para completar la verificación, por favor haz clic en el siguiente enlace:" +
+                        "<br /><br />" +
+                        "<a href=\"%s\">Verificar Identidad</a>" +
+                        "<br /><br />" +
+                        "Este enlace te llevará a una página donde podrás confirmar tu identidad. Una vez completado este paso, tu verificación estará finalizada y podrás acceder a todos los beneficios de nuestra plataforma de manera segura." +
+                        "<br /><br />" +
+                        "Si tienes alguna pregunta o necesitas asistencia durante este proceso, no dudes en contactarnos respondiendo a este correo." +
+                        "<br /><br />" +
+                        "Gracias de nuevo por tu colaboración." +
+                        "<br /><br />" +
+                        "Atentamente," +
+                        "<br /><br />" +
+                        "Miguel Gavira<br /><br />" +
+                        "S. G PQRS<br /><br />" +
+                        "3015737613</p>",
+                user.getName(), user.getLastName(), activationLink1
+        );
+
+        emailService.sendEmails(
+                new String[]{user.getEmail()},
+                "Confirma tu correo",
+                mensajeHtml
+        );
+
+
         return AuthResponse.builder()
                 .token(jwtToken).build();
     }
@@ -75,7 +107,7 @@ public class AuthServiceImpl implements AuthService {
                 .name(request.getName())
                 .lastName(request.getLastName())
                 .email(request.getEmail())
-                .stateUser("ACTIVO")
+                .stateUser("INACTIVO")
                 .identificationType(request.getIdentificationType())
                 .identificationNumber(request.getIdentificationNumber())
                 .personType(request.getPersonType())
@@ -85,6 +117,32 @@ public class AuthServiceImpl implements AuthService {
                 .build();
         userRepository.save(user);
         var jwtToken = jwtService.genereteToken((UserDetails) user);
+        // Enviar correo electrónico de activación
+        String activationLink1 = "http://localhost:5173/activate/"+jwtToken;
+        String mensajeHtml = String.format(
+                "<h1>Hola %s %s</h1>" +
+                        "<p>Gracias por iniciar el proceso de verificación de identidad en nuestra plataforma. Para completar la verificación, por favor haz clic en el siguiente enlace:" +
+                        "<br /><br />" +
+                        "<a href=\"%s\">Verificar Identidad</a>" +
+                        "<br /><br />" +
+                        "Este enlace te llevará a una página donde podrás confirmar tu identidad. Una vez completado este paso, tu verificación estará finalizada y podrás acceder a todos los beneficios de nuestra plataforma de manera segura." +
+                        "<br /><br />" +
+                        "Si tienes alguna pregunta o necesitas asistencia durante este proceso, no dudes en contactarnos respondiendo a este correo." +
+                        "<br /><br />" +
+                        "Gracias de nuevo por tu colaboración." +
+                        "<br /><br />" +
+                        "Atentamente," +
+                        "<br /><br />" +
+                        "Miguel Gavira<br /><br />" +
+                        "S. G PQRS<br /><br />" +
+                        "3015737613</p>",
+                user.getName(), user.getLastName(), activationLink1
+        );
+
+        emailService.sendEmails(
+                new String[]{user.getEmail()},
+                "Confirma tu correo",
+                mensajeHtml);
         return AuthResponse.builder()
                 .token(jwtToken).build();
     }
@@ -104,6 +162,32 @@ public class AuthServiceImpl implements AuthService {
                 .build();
         userRepository.save(user);
         var jwtToken = jwtService.genereteToken((UserDetails) user);
+        // Enviar correo electrónico de activación
+        String activationLink1 = "http://localhost:5173/activate/"+jwtToken;
+        String mensajeHtml = String.format(
+                "<h1>Hola %s %s</h1>" +
+                        "<p>Gracias por iniciar el proceso de verificación de identidad en nuestra plataforma. Para completar la verificación, por favor haz clic en el siguiente enlace:" +
+                        "<br /><br />" +
+                        "<a href=\"%s\">Verificar Identidad</a>" +
+                        "<br /><br />" +
+                        "Este enlace te llevará a una página donde podrás confirmar tu identidad. Una vez completado este paso, tu verificación estará finalizada y podrás acceder a todos los beneficios de nuestra plataforma de manera segura." +
+                        "<br /><br />" +
+                        "Si tienes alguna pregunta o necesitas asistencia durante este proceso, no dudes en contactarnos respondiendo a este correo." +
+                        "<br /><br />" +
+                        "Gracias de nuevo por tu colaboración." +
+                        "<br /><br />" +
+                        "Atentamente," +
+                        "<br /><br />" +
+                        "Miguel Gavira<br /><br />" +
+                        "S. G PQRS<br /><br />" +
+                        "3015737613</p>",
+                user.getName(), user.getLastName(), activationLink1
+        );
+
+        emailService.sendEmails(
+                new String[]{user.getEmail()},
+                "Confirma tu correo",
+                mensajeHtml);
         return AuthResponse.builder()
                 .token(jwtToken).build();
     }

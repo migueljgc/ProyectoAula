@@ -19,6 +19,9 @@ export const CrearSecre = () => {
         dependencia: '',
     });
 
+    const [passwordError, setPasswordError] = useState('');
+    const [confirmPasswordError, setConfirmPasswordError] = useState('');
+
     const [identificationTypes, setIdentificationTypes] = useState([]);
     const [personTypes, setPersonTypes] = useState([]);
     const [dependenceTypes, setDependence] = useState([]);
@@ -83,8 +86,33 @@ export const CrearSecre = () => {
         });
     }
 
+    const validatePassword = (password) => {
+        const minLength = password.length >= 8;
+        const hasUpperCase = /[A-Z]/.test(password);
+        const hasLowerrCase = /[a-z]/.test(password);
+        const hasNumber = /\d/.test(password);
+        const hasSpecialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?]/.test(password);
+        
+        return minLength && hasUpperCase && hasNumber && hasSpecialChar && hasLowerrCase;
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        const isValidPassword = validatePassword(formData.contraseña);
+        if (!isValidPassword) {
+            setPasswordError('La contraseña debe tener mínimo 8 caracteres, al menos un número, un signo y una letra mayúscula.');
+            return;
+        } else {
+            setPasswordError('Contraseña valida');
+        }
+
+        if (formData.contraseña !== formData.confirmarContraseña) {
+            setConfirmPasswordError('Las contraseñas no coinciden');
+            return;
+        } else {
+            setConfirmPasswordError('Contraseña valida');
+        }
 
         try {
             console.log('Datos del formulario a enviar:', formData);
@@ -186,6 +214,7 @@ export const CrearSecre = () => {
                                 value={formData.contraseña}
                                 onChange={handleChange} required
                             />
+                            {passwordError && <div className='errore'> {passwordError}</div>}
                         </div> <br />
                         <div className="input-box1">
                             <label htmlFor="confirmarContraseña">Confirmar Contraseña:</label><br />
@@ -196,6 +225,7 @@ export const CrearSecre = () => {
                                 value={formData.confirmarContraseña}
                                 onChange={handleChange} required
                             />
+                            {confirmPasswordError && <div className='errore'> {confirmPasswordError}</div>}
                         </div> <br />
                         <div className="select-box1">
                             <label htmlFor="dependencia">Dependencia:</label><br />

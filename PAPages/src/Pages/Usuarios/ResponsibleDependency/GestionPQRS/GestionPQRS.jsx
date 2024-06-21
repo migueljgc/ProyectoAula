@@ -18,7 +18,7 @@ export const GestionPQRS = () => {
     const fetchData = async () => {
         try {
             const response = await axios.get('http://localhost:8080/api/request/get');
-            setData(response.data);
+            
             const token = localStorage.getItem('token');
             const response1 = await axios.get('http://localhost:8080/api/auth/editar', {
                 headers: {
@@ -100,7 +100,8 @@ export const GestionPQRS = () => {
         },
         {
             name: 'Fecha',
-            selector: row => row.date
+            selector: row => row.date,
+            sortable: true
         },
         {
             name: 'Tipo de Solicitud',
@@ -126,16 +127,18 @@ export const GestionPQRS = () => {
         <div className='VerPQRS'>
             <BackGraund />
             <MenuSecre />
-            <div className="gestion">
+            <div className="gestione">
                 <div className='cla'>
                     <DataTable
                         columns={columns}
                         data={data}
-                        onRowClicked={handleRow}
                         fixedHeader
+                        onRowClicked={handleRow}
                         highlightOnHover
                         conditionalRowStyles={conditionalRowStyles}
-                    /> <br />
+                        
+                    /> <br /></div>
+                    <div className="">
                     <button onClick={handleResponderClick} disabled={!selectedRow}>Responder</button>
                     <br />
 

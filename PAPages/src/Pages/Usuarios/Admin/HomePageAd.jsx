@@ -3,7 +3,7 @@ import { BackGraund } from '../../../../componentes/BackGraund';
 import { MenuAdmin } from '../../../../componentes/Menu';
 
 export const HomePageAd = () => {
-    const user = localStorage.getItem('username');
+    const user = localStorage.getItem('users');
     console.log(user)
     useEffect(()=> {
         document.title = "Home"

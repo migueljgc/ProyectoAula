@@ -18,14 +18,18 @@ export const CrearPQRS = () => {
         user: '', // Ya no se asignará directamente aquí
         dependencia: '',
     });
-
+    const [form, setForm] = useState({
+        dependencia: '',
+    });
     const [categoriasTypes, setCategorias] = useState([]);
     const [date, setFecha] = useState('');
     const [requestType, setRequest] = useState([]);
     const [dependencias, setDependencias] = useState([]);
     const [filteredCategorias, setFilteredCategorias] = useState([]);
+    const token = localStorage.getItem('token');
 
     useEffect(() => {
+
         const fetchCategorias = async () => {
             try {
                 const response = await axios.get('http://localhost:8080/api/category/get');
@@ -60,6 +64,7 @@ export const CrearPQRS = () => {
             setFormData(prevFormData => ({ ...prevFormData, date: fechaFormat }));
         };
 
+        
         fetchRequest();
         fetchCategorias();
         fetchDependencias();
@@ -68,10 +73,21 @@ export const CrearPQRS = () => {
 
     useEffect(() => {
         document.title = "Crear PQRS"
-        const username = localStorage.getItem('username');
-        if (username) {
-            setFormData(prevFormData => ({ ...prevFormData, user: username }));
+        const fetchUser = async () =>{
+            const response1 = await axios.get('http://localhost:8080/api/auth/editar', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            const user=(response1.data.user)
+            console.log(user)
+            const username = user ;
+                if (username) {
+                    setFormData(prevFormData => ({ ...prevFormData, user: username }));
+                }
         }
+        fetchUser();
+        
     }, []);
 
     const handleChange = (e) => {
@@ -83,6 +99,7 @@ export const CrearPQRS = () => {
 
             const filtered = categoriasTypes.filter(cat => cat.dependence.idDependence === dependenciaId);
             setFilteredCategorias(filtered);
+
         } else {
             setFormData(prevState => ({ ...prevState, [name]: value }));
         }
@@ -101,7 +118,6 @@ export const CrearPQRS = () => {
             mediumAnswer: '',
             requestState: '',
             requestType: '',
-            user: localStorage.getItem('username') || '',
             dependencia: '',
         });
     };
@@ -110,8 +126,17 @@ export const CrearPQRS = () => {
         e.preventDefault();
 
         try {
+
+            const response1 = await axios.get('http://localhost:8080/api/auth/editar', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            const user =response1.data.user
+            console.log(user)
             const selectedCategoria = categoriasTypes.find(type => type.idCategory === parseInt(formData.category));
             const selectedRequestType = requestType.find(type => type.idRequestType === parseInt(formData.requestType));
+            const selecteddepen = dependencias.find(dep => dep.idDependence === parseInt(formData.dependencia));
             console.log(formData)
             const StateRequest = { idRequestState: 1 };
             const respuesta = await axios.post('http://localhost:8080/api/request/save', {
@@ -127,8 +152,50 @@ export const CrearPQRS = () => {
             const responseData = respuesta.data;
             const numRadicado = responseData.requestState;
            
+            
+            console.log(response1.data)
+            const dto = {
+                toUser: [`${response1.data.email}`], // Ajusta los destinatarios según tu lógica
+                subject: 'Confirmación de Solicitud',
+                message: `<h2>Solicitud PQRS</h2>
+                <p>
+                Datos del remitente:<br/>
+
+                Nombre completo: ${response1.data.name} ${response1.data.lastName}<br/>
+                Tipo de identificacion: ${response1.data.identificationType.nameIdentificationType}<br/>
+                Identificacion: ${response1.data.identificationNumber}<br/>
+                Correo electrónico: ${response1.data.email}<br/>
+                Tipo de persona: ${response1.data.personType.namePersonType}<br/><br/>
+
+                Solicitud:<br/>
+
+                Tipo de Solicitud: ${selectedRequestType.nameRequestType}.<br/>
+                Dependencia: ${selecteddepen.nameDependence}.<br/>
+                Categoría: ${selectedCategoria.nameCategory}.<br/>
+                Medio de Respuesta: ${formData.mediumAnswer}.<br/>
+                Descripción: ${formData.description}.</p> `,
+
+                pdfContent: `
+                Solicitud PQRS
+                
+                Datos del remitente:
+
+                Nombre completo: ${response1.data.name} ${response1.data.lastName}
+                Tipo de identificacion: ${response1.data.identificationType.nameIdentificationType}
+                Identificacion: ${response1.data.identificationNumber}
+                Correo electrónico: ${response1.data.email}
+                Tipo de persona: ${response1.data.personType.namePersonType}
+
+                Solicitud:
+                Tipo de Solicitud: ${selectedRequestType.nameRequestType}.
+                Dependencia: ${selecteddepen.nameDependence}.
+                Categoría: ${selectedCategoria.nameCategory}.
+                Medio de Respuesta: ${formData.mediumAnswer}.
+                Descripción: ${formData.description}.
+                `
+            };
             alert('Solicitud Radicada Con Exito Su Numero De Radicado es: ' + numRadicado);
-            handleReset();
+            await axios.post('http://localhost:8080/api/send/sendEmailWithPdf', dto);handleReset();
         } catch (error) {
             console.error('Error al guardar información:', error.response ? error.response.data : error.message);
         }

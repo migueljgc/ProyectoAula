@@ -16,7 +16,8 @@ export const ReplyPQRS = () => {
     const [formData, setFormData] = useState({
         answer: '',
         requestState: { idRequestState: 2 }
-    })
+    });
+    const maxCharsPerLine = 50;
 
     useEffect(() => {
         if (state && state.data) {
@@ -34,23 +35,82 @@ export const ReplyPQRS = () => {
             [e.target.name]: e.target.value,
         });
     };
+
+    const addLineBreaks = (str, maxChars) => {
+        let result = '';
+        let start = 0;
+        while (start < str.length) {
+            result += str.substring(start, start + maxChars) + '\n';
+            start += maxChars;
+        }
+        return result.trim();
+    };
     useEffect(() => {
         console.log(form.idRequest)
+        console.log(form)
         document.title = "Responder PQRS"
         
     }, []);
     const habdleSubmit = async (e) => {
         e.preventDefault();
-        
+        const formattedAnswer = addLineBreaks(formData.answer, maxCharsPerLine);
+        const formattedFormData = { ...formData, answer: formattedAnswer };
+        console.log('tu ',formattedFormData)
             try {
                 
-                const response = await axios.put(`http://localhost:8080/api/request/update/${form.idRequest}`,formData,{
+                const response = await axios.put(`http://localhost:8080/api/request/update/${form.idRequest}`,formattedFormData,{
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${token}`
                     }
                 });
                 console.log('Response:', response.data);
+                setData('CARGANDO')
+                const dto = {
+                    toUser: [`${form.user.email}`], // Ajusta los destinatarios según tu lógica
+                    subject: 'Confirmación de Solicitud',
+                    message: `<h2>Solicitud PQRS</h2>
+                    <p>
+                    Datos del remitente:<br/>
+    
+                    Nombre completo: ${form.user.name} ${form.user.lastName}<br/>
+                    Tipo de identificacion: ${form.user.identificationType.nameIdentificationType}<br/>
+                    Identificacion: ${form.user.identificationNumber}<br/>
+                    Correo electrónico: ${form.user.email}<br/>
+                    Tipo de persona: ${form.user.personType.namePersonType}<br/><br/>
+    
+                    Solicitud:<br/>
+    
+                    Tipo de Solicitud: ${form.requestType.nameRequestType}.<br/>
+                    Dependencia: ${form.dependence.nameDependence}.<br/>
+                    Categoría: ${form.category.nameCategory}.<br/>
+                    Medio de Respuesta: ${form.mediumAnswer}.<br/>
+                    Descripción: ${form.description}.<br/>
+                    Respesta: ${formattedFormData.answer}.</p> `,
+    
+                    pdfContent: `
+Solicitud PQRS
+                    
+Datos del remitente:
+    
+Nombre completo: ${form.user.name} ${form.user.lastName}
+Tipo de identificacion: ${form.user.identificationType.nameIdentificationType}
+Identificacion: ${form.user.identificationNumber}
+Correo electrónico: ${form.user.email}
+Tipo de persona: ${form.user.personType.namePersonType}
+    
+Solicitud:
+    
+Tipo de Solicitud: ${form.requestType.nameRequestType}.
+Dependencia: ${form.dependence.nameDependence}.
+Categoría: ${form.category.nameCategory}.
+Medio de Respuesta: ${form.mediumAnswer}.
+Descripción: ${form.description}.
+Respesta: ${formattedFormData.answer}.
+                    `
+                };
+                await axios.post('http://localhost:8080/api/send/sendEmailWithPdf', dto)
+
             } catch (error) {
                 console.error('Error al actualizar el estado: ', error);
             }
@@ -59,6 +119,7 @@ export const ReplyPQRS = () => {
 
             alert('EXITOSO');
             navigate('/GestionPQRS');
+            setData('')
             handleReset();
     };
     console.log(datas)
@@ -94,6 +155,8 @@ export const ReplyPQRS = () => {
                     <div className="enviar">
                         <button type="submit">Enviar</button>
                         <HiArrowCircleLeft />
+                        <br />
+                        {data}
                     </div><br />
                 </form>
 

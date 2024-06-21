@@ -51,6 +51,8 @@ return(
         
         columns={columns}
         data={data}
+        pagination
+        
         
         />
         

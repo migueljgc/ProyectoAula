@@ -4,11 +4,11 @@ import './script.css'
 
 
 export const Script = () => {
-  const [user, setUser] = useState(localStorage.getItem('username'));
+  const [user, setUser] = useState(localStorage.getItem('users'));
 
   useEffect(() => {
     // Actualizar el estado del usuario cuando cambie el valor en localStorage
-    setUser(localStorage.getItem('username'));
+    setUser(localStorage.getItem('users'));
   }, []);
   return (
 
@@ -32,11 +32,11 @@ export const Script = () => {
   );
 };
 export const ScriptUser = () => {
-  const [user, setUser] = useState(localStorage.getItem('username'));
+  const [user, setUser] = useState(localStorage.getItem('users'));
 
   useEffect(() => {
     // Actualizar el estado del usuario cuando cambie el valor en localStorage
-    setUser(localStorage.getItem('username'));
+    setUser(localStorage.getItem('users'));
   }, []);
   return (
 
@@ -57,11 +57,11 @@ export const ScriptUser = () => {
   );
 };
 export const ScriptSecre = () => {
-  const [user, setUser] = useState(localStorage.getItem('username'));
+  const [user, setUser] = useState(localStorage.getItem('users'));
 
   useEffect(() => {
     // Actualizar el estado del usuario cuando cambie el valor en localStorage
-    setUser(localStorage.getItem('username'));
+    setUser(localStorage.getItem('users'));
   }, []);
   return (
 

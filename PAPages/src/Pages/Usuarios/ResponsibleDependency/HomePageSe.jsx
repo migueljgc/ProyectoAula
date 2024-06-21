@@ -3,7 +3,7 @@ import { BackGraund } from '../../../../componentes/BackGraund';
 import { MenuSecre } from '../../../../componentes/Menu';
 
 export const HomePageSe = () => {
-    const user = localStorage.getItem('username');
+    const user = localStorage.getItem('users');
     console.log(user)
     useEffect(()=> {
         document.title = "Home"

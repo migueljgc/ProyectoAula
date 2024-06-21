@@ -1,0 +1,33 @@
+.floating-message {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    border-radius: 4px;
+    color: white;
+    font-weight: bold;
+    z-index: 1000;
+    animation: fadeIn 0.3s, fadeOut 0.3s 2.7s;
+  }
+  
+  .success {
+    background-color: #4CAF50;
+  }
+  
+  .error {
+    background-color: #f44336;
+  }
+  
+  .info {
+    background-color: #2196F3;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+  }

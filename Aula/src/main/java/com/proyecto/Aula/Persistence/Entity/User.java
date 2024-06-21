@@ -1,6 +1,7 @@
 package com.proyecto.Aula.Persistence.Entity;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.proyecto.Aula.Controller.models.AuthResponse;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -63,6 +64,7 @@ public class User  implements UserDetails {
 
     @Column(name = "Estado_Usuario")
     private String stateUser;
+
 
 
 

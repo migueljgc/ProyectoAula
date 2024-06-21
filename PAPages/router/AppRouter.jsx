@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { Navbar } from '../Navbar';
 import { Login } from '../src/Pages/Login and Register/Login';
 import { EditarPerfil, EditarPerfilSecre } from '../componentes/EditarPerfil';
@@ -22,6 +22,10 @@ import { VerUsuarios } from '../src/Pages/Usuarios/Admin/VerUsuarios/VerUsuarios
 import { ReplyPQRS } from '../src/Pages/Usuarios/ResponsibleDependency/ReplyPQRS/ReplyPQRS';
 import {ProtectedRoute} from '../router/ProtectedRoute';
 import { CrearSecre } from '../src/Pages/Usuarios/Admin/CrearUsuario/CrearSecre';
+import {ActivatePage} from '../componentes/ActivatePage';
+import {ResetPassword} from '../componentes/ResetPassword';
+
+
 
 export const AppRouter = () => {
   return (
@@ -31,6 +35,8 @@ export const AppRouter = () => {
         <Route path="/Login" element={<Login />} />
         <Route path="/Recuperacion" element={<Recovery />} />
         <Route path="/Registro" element={<Registro />} />
+        <Route path="/activate/:token" element={<ActivatePage />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="*" element={<PageNotFound />} />
 
         {/* Rutas protegidas */}
