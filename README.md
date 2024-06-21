@@ -29,7 +29,8 @@ Para iniciar el Front-End deben hacer lo siguiente:
 
 Para configurar Mail Sender debemos hacer lo siguiente tome en cuenta que lo 3 primeros pason son con gmail, si tiene otro servicio de internet como yahoo o outlock por ejemplo tendria que buscar como hacerlos: 
 
-1. Primero debemos entar a Administar tu Cuenta de Google del correo 
+1. Primero debemos entar a Administar tu Cuenta de Google del correo
+   
 ![Imagen de WhatsApp 2024-06-21 a las 14 13 49_62d4f3fe](https://github.com/migueljgc/ProyectoAula/assets/162649055/24b708ef-1cdd-4dfe-b29a-d8f6577b03db)
 
 
