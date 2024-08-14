@@ -12,14 +12,22 @@ export const VerPQRS = () => {
     const fetchData = async () =>{
         try{
             const response = await axios.get('http://localhost:8080/api/request/get')
-            const usuario=localStorage.getItem('username');
+            setData(response.data);
+            const usuario=localStorage.getItem('users');
+            console.log(usuario)
             if (usuario) {
                 const filteredData = response.data.filter(item => item.user && item.user.user === usuario); // Filtrar los datos por el usuario
+                filteredData.forEach(item => {
+                    item.date = new Date(item.date).toDateString();
+                    
+                });
                 setData(filteredData);
+                console.log("filteredData  ", filteredData)
             } else {
                 setData([]);
             }
             console.log(response.data);
+            console.log("esta es la data ",data);
         } catch (error){
             console.error('Error en la data: ', error);
         }
@@ -63,6 +71,19 @@ useEffect( () => {
             name: 'Estado',
             selector: row => row.requestState.nameRequestState
         },
+        {
+            name: 'archivo',
+            cell: row => row.archivo ? (
+                    <a href={`http://localhost:8080/api/request/download/${encodeURIComponent(row.archivo.split('\\').pop())}`} download target="_blank" rel="noopener noreferrer">
+                        <button>Descargar</button>
+                    </a>
+                
+            ) : (
+                <div>
+                    <span>No disponible</span>
+                </div>
+            )
+        }
         
         
     ]

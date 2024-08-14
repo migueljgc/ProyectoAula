@@ -11,6 +11,7 @@ export const Login = () => {
     const [user, setUser] = useState('');
     const [password, setPassword] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
+    const [isLogged, setIsLogged] = useState('');
 
     useEffect(() => {
         document.title = "Login"
@@ -20,8 +21,27 @@ export const Login = () => {
             setUser(storedUsername);
             setRememberMe(true);
         }
+        checkLoginStatus();
     }, []);
+    const checkLoginStatus = () => {
+        const logged = localStorage.getItem('logget') === 'true';
+        setIsLogged(logged);
+        console.log('Logget: ', logged);
+        if (logged) {
+            const userData = JSON.parse(localStorage.getItem('user'));
+            if (userData) {
+                const { role } = userData;
+                if (role === 'ADMIN') {
+                    navigate('/HomePagesAdmin');
+                } else if (role === 'USER') {
+                    navigate('/HomePagesUser');
+                } else if (role === 'SECRE') {
+                    navigate('/HomePagesSecre');
+                }
+            }
+        }
 
+    };
     const onLogin = async (e) => {
         e.preventDefault();
 
@@ -34,11 +54,7 @@ export const Login = () => {
             if (response.status === 200) {
                 const responseData = response.data;
                 console.log(responseData)
-                const stateUser = responseData.stateUser;
-                if (stateUser === 'INACTIVO') {
-                    alert('Usuario Inactivo');
-                    return;
-                }
+
                 const { token, authorities } = response.data;
                 localStorage.setItem('token', token);
                 localStorage.setItem('user', JSON.stringify({ user, role: authorities[0] })); // Assuming single role
@@ -47,18 +63,29 @@ export const Login = () => {
                         'Authorization': `Bearer ${token}`
                     }
                 });
-                localStorage.removeItem('username')
-                const users=(response1.data.user)
+                const stateUser = response1.data.stateUser;
+                console.log(stateUser)
+                if (stateUser === 'INACTIVO') {
+                    alert('Usuario Inactivo');
+                    return;
+                }
+                localStorage.removeItem('username');
+                const users = (response1.data.user)
                 console.log(users)
                 localStorage.setItem('users', users);
                 if (authorities.includes('ADMIN')) {
                     window.location.href = '/HomePagesAdmin';
+                    localStorage.setItem('logget', true);
                 } else if (authorities.includes('USER')) {
                     window.location.href = '/HomePagesUser';
+                    localStorage.setItem('logget', true);
                 } else if (authorities.includes('SECRE')) {
                     window.location.href = '/HomePagesSecre';
+                    localStorage.setItem('logget', true);
                 } else {
+
                     window.location.href = '/';
+
                 }
 
             } else {
@@ -74,9 +101,13 @@ export const Login = () => {
             localStorage.setItem('username', user);
         }
     }
+    if (isLogged) {
+        return null; // o un spinner si quieres mostrar algo mientras se redirige
+    }
 
     return (
         <div className='login'>
+        
             <BackGraund />
             <div className="formLogin" onSubmit={onLogin}>
                 <div className="usa">

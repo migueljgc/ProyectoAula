@@ -2,7 +2,7 @@ import React from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { Navbar } from '../Navbar';
 import { Login } from '../src/Pages/Login and Register/Login';
-import { EditarPerfil, EditarPerfilSecre } from '../componentes/EditarPerfil';
+import { EditarPerfil, EditarPerfilSecre, EditarPerfilUser } from '../componentes/EditarPerfil';
 import { CrearUsuario } from '../src/Pages/Usuarios/Admin/CrearUsuario/CrearUsuario';
 import { Recovery } from '../componentes/Recovery';
 import { Registro } from '../src/Pages/Login and Register/Registro';
@@ -57,7 +57,7 @@ export const AppRouter = () => {
           <ProtectedRoute allowedRoles={['ADMIN']} element={<EditarPerfil />} />
         } />
         <Route path="/EditarPerfilUser" element={
-          <ProtectedRoute allowedRoles={['USER']} element={<EditarPerfil />} />
+          <ProtectedRoute allowedRoles={['USER']} element={<EditarPerfilUser />} />
         } />
         <Route path="/EditarPerfilSecre" element={
           <ProtectedRoute allowedRoles={['SECRE']} element={<EditarPerfilSecre />} />

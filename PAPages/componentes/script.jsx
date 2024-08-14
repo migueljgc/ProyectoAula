@@ -10,6 +10,9 @@ export const Script = () => {
     // Actualizar el estado del usuario cuando cambie el valor en localStorage
     setUser(localStorage.getItem('users'));
   }, []);
+  const handleLogout = () => {
+    localStorage.setItem('logget', 'false');
+  };
   return (
 
 
@@ -21,7 +24,7 @@ export const Script = () => {
         </div>
         <div className="abajo"><a href="/EditarPerfilAdmin">
           <i className="fa fa-plus"></i>Editar usuario</a>
-          <a href="/Login">
+          <a href="/Login" onClick={handleLogout}>
             <i className="fa fa-sign-out"></i>Salir</a>
         </div>
       </div>
@@ -31,6 +34,8 @@ export const Script = () => {
 
   );
 };
+
+//_______________________________________________________________________________________________________________
 export const ScriptUser = () => {
   const [user, setUser] = useState(localStorage.getItem('users'));
 
@@ -38,6 +43,9 @@ export const ScriptUser = () => {
     // Actualizar el estado del usuario cuando cambie el valor en localStorage
     setUser(localStorage.getItem('users'));
   }, []);
+  const handleLogout = () => {
+    localStorage.setItem('logget', 'false');
+  };
   return (
 
 
@@ -46,7 +54,7 @@ export const ScriptUser = () => {
         <div className="arriba">{user && <p>Bienvenido, {user}!</p>}</div>
         <div className="abajo"><a href="/EditarPerfilUser">
           <i className="fa fa-plus"></i>Editar usuario</a>
-          <a href="/Login" >
+          <a href="/Login" onClick={handleLogout}>
             <i className="fa fa-sign-out"></i>Salir</a>
         </div>
       </div>
@@ -56,6 +64,8 @@ export const ScriptUser = () => {
 
   );
 };
+
+//_________________________________________________________________________________________________________________
 export const ScriptSecre = () => {
   const [user, setUser] = useState(localStorage.getItem('users'));
 
@@ -63,6 +73,9 @@ export const ScriptSecre = () => {
     // Actualizar el estado del usuario cuando cambie el valor en localStorage
     setUser(localStorage.getItem('users'));
   }, []);
+  const handleLogout = () => {
+    localStorage.setItem('logget', 'false');
+  };
   return (
 
 
@@ -71,7 +84,7 @@ export const ScriptSecre = () => {
         <div className="arriba">{user && <p>Bienvenido, {user}!</p>}</div>
         <div className="abajo"><a href="/EditarPerfilSecre">
           <i className="fa fa-plus"></i>Editar usuario</a>
-          <a href="/Login" >
+          <a href="/Login" onClick={handleLogout}>
             <i className="fa fa-sign-out"></i>Salir</a>
 
         </div>

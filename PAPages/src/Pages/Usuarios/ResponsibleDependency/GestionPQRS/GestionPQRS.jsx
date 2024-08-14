@@ -29,6 +29,10 @@ export const GestionPQRS = () => {
             console.log(usuario)
             if (usuario) {
                 const filteredData = response.data.filter(item => item.dependence && item.dependence.idDependence === usuario); // Filtrar los datos por el usuario
+                filteredData.forEach(item => {
+                    item.date = new Date(item.date).toDateString();
+                    
+                });
                 setData(filteredData);
             } else {
                 setData([]);
@@ -120,6 +124,19 @@ export const GestionPQRS = () => {
             name: 'Estado',
             selector: row => row.requestState.nameRequestState
         },
+        {
+            name: 'archivo',
+            cell: row => row.archivo ? (
+                    <a href={`http://localhost:8080/api/request/download/${encodeURIComponent(row.archivo.split('\\').pop())}`} download target="_blank" rel="noopener noreferrer">
+                        <button>Descargar</button>
+                    </a>
+                
+            ) : (
+                <div>
+                    <span>No disponible</span>
+                </div>
+            )
+        }
 
     ];
 

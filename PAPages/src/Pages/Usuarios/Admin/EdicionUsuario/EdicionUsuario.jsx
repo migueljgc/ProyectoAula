@@ -163,7 +163,7 @@ export const EdicionUsuario = () => {
                                         type="text"
                                         id="name"
                                         name="name"
-                                        value={selectedItem.name || ''}
+                                        value={selectedItem.name}
                                         onChange={handleFormChange}
                                     />
                                 </div> <br />

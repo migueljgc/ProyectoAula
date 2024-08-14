@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import './CrearPQRS.css';
 import { MenuUser } from '../../../../../componentes/Menu';
@@ -27,6 +27,9 @@ export const CrearPQRS = () => {
     const [dependencias, setDependencias] = useState([]);
     const [filteredCategorias, setFilteredCategorias] = useState([]);
     const token = localStorage.getItem('token');
+    const [archivo, setArchivo] = useState(null);
+    const fileInputRef = useRef(null);
+
 
     useEffect(() => {
 
@@ -61,7 +64,9 @@ export const CrearPQRS = () => {
             const fechaActual = new Date();
             const fechaFormat = fechaActual.toISOString().slice(0, 10);
             setFecha(fechaFormat);
-            setFormData(prevFormData => ({ ...prevFormData, date: fechaFormat }));
+            console.log(fechaFormat)
+            //setFormData(prevFormData => ({ ...prevFormData, date: fechaFormat }));
+            console.log(formData)
         };
 
         
@@ -80,7 +85,7 @@ export const CrearPQRS = () => {
                 }
             });
             const user=(response1.data.user)
-            console.log(user)
+            console.log(response1.data)
             const username = user ;
                 if (username) {
                     setFormData(prevFormData => ({ ...prevFormData, user: username }));
@@ -89,6 +94,9 @@ export const CrearPQRS = () => {
         fetchUser();
         
     }, []);
+    const handleFileChange = (e) => {
+        setArchivo (e.target.files[0])
+    }
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -112,7 +120,7 @@ export const CrearPQRS = () => {
             medioRespuesta: '',
             answer: '',
             category: '',
-            date: fechaFormat,
+            date: '',
             description: '',
             idRequest: '',
             mediumAnswer: '',
@@ -120,6 +128,9 @@ export const CrearPQRS = () => {
             requestType: '',
             dependencia: '',
         });
+        if (fileInputRef.current){
+            fileInputRef.current.value= "";
+        }
     };
 
     const handleSubmit = async (e) => {
@@ -134,19 +145,31 @@ export const CrearPQRS = () => {
             });
             const user =response1.data.user
             console.log(user)
+            const formDataToSend = new FormData();
             const selectedCategoria = categoriasTypes.find(type => type.idCategory === parseInt(formData.category));
             const selectedRequestType = requestType.find(type => type.idRequestType === parseInt(formData.requestType));
             const selecteddepen = dependencias.find(dep => dep.idDependence === parseInt(formData.dependencia));
             console.log(formData)
             const StateRequest = { idRequestState: 1 };
-            const respuesta = await axios.post('http://localhost:8080/api/request/save', {
-                date: formData.date,
+            if (archivo) {
+                formDataToSend.append('archivo', archivo);
+                console.log(archivo)
+            }
+            formDataToSend.append('request', new Blob([JSON.stringify({
                 description: formData.description,
                 mediumAnswer: formData.mediumAnswer,
                 category: { idCategory: selectedCategoria ? selectedCategoria.idCategory : null },
                 requestType: { idRequestType: selectedRequestType ? selectedRequestType.idRequestType : null },
                 requestState: StateRequest,
-                dependence: { idDependence: parseInt(formData.dependencia) }
+                dependence: { idDependence: parseInt(formData.dependencia) },
+                date: date
+            })], {
+                type: 'application/json'
+            }));
+            const respuesta = await axios.post('http://localhost:8080/api/request/save', formDataToSend, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
             });
             console.log(respuesta.data)
             const responseData = respuesta.data;
@@ -282,7 +305,7 @@ export const CrearPQRS = () => {
                         </div><br />
 
                         <div className="input-box1">
-                            <label htmlFor="description">Concepto de Solicitud:</label>
+                            <label htmlFor="description">Concepto de Solicitud:</label><br />
                             <textarea
                                 name="description"
                                 id="description"
@@ -293,6 +316,17 @@ export const CrearPQRS = () => {
                                 required
                             ></textarea>
                         </div><br />
+
+                        <div className="input-box1">
+                            <label htmlFor="archivo">Adjuntar Archivo:</label><br />
+                            <input type="file"
+                            id='file'
+                            onChange={handleFileChange} 
+                            ref={fileInputRef}
+                            name='archivo'
+                            />
+                        </div><br />
+
 
                         <div className="enviar">
                             <button type="submit">Enviar</button>
