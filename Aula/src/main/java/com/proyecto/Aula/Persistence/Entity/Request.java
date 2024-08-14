@@ -50,4 +50,9 @@ public class Request {
     @JoinColumn (name = "ID_Dependencia")
     @ManyToOne
     private Dependence dependence;
+
+    @Lob
+    @Column(name = "Archivo")
+    private String archivo;
+
 }

@@ -18,6 +18,7 @@ public class RequestMapper {
         request.setAnswer(requestDTO.getAnswer());
         request.setRequestState(requestDTO.getRequestState());
         request.setMediumAnswer(requestDTO.getMediumAnswer());
+        request.setArchivo(requestDTO.getArchivo());
         return request;
     }
     public static RequestDTO toDTO(Request request) {
@@ -32,6 +33,7 @@ public class RequestMapper {
         requestDTO.setAnswer(request.getAnswer());
         requestDTO.setRequestState(request.getRequestState());
         requestDTO.setMediumAnswer(request.getMediumAnswer());
+        requestDTO.setArchivo(request.getArchivo());
         return requestDTO;
     }
 }

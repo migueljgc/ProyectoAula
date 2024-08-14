@@ -12,6 +12,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.math.BigInteger;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -65,6 +66,8 @@ public class User  implements UserDetails {
     @Column(name = "Estado_Usuario")
     private String stateUser;
 
+    @Column(name = "Fecha_Registro")
+    private LocalDateTime fechaRegistro;
 
 
 

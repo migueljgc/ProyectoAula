@@ -16,8 +16,9 @@ import java.io.File;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.springframework.core.io.ClassPathResource;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -67,10 +68,10 @@ public class EmailServiceImpl implements  IEmailService {
         PDPage page = new PDPage();
         document.addPage(page);
 
-        // Cargar la fuente Arial desde el archivo TTF
-        File fontFile = new File("src/main/resources/fonts/arial.ttf");
-        PDType0Font font = PDType0Font.load(document, fontFile);
-
+        // Cargar la fuente Arial desde el classpath
+        ClassPathResource fontResource = new ClassPathResource("fonts/arial.ttf");
+        PDType0Font font = PDType0Font.load(document, fontResource.getInputStream());
+            
         PDPageContentStream contentStream = new PDPageContentStream(document, page);
         contentStream.setFont(font, 12); // Establecer la fuente y el tamaño
         contentStream.setLeading(14.5f); // Espaciado entre líneas

@@ -44,6 +44,7 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
         new AntPathRequestMatcher("/api/identification_type/get"),
         new AntPathRequestMatcher("/api/person_type/get"),
         new AntPathRequestMatcher("/api/send/**"),
+                new AntPathRequestMatcher("/api/request/download/**"),
         new AntPathRequestMatcher("/api/auth//verify-email"),
                 new AntPathRequestMatcher("/forgot-password/**")
         );

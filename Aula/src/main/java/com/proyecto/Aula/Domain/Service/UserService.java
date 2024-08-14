@@ -10,6 +10,8 @@ import com.proyecto.Aula.Persistence.Entity.Request;
 import com.proyecto.Aula.Persistence.Entity.User;
 import com.proyecto.Aula.Persistence.Repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -123,4 +126,4 @@ public class UserService {
         }
     }
 
-}
+    }

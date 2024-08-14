@@ -22,4 +22,5 @@ public class RequestDTO {
     private String answer;
     private RequestState requestState;
     private String mediumAnswer;
+    private String archivo;
 }
